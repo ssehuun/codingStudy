@@ -1,0 +1,59 @@
+#include <stdio.h>
+#include <stdlib.h>
+int result;
+int searchMin(int **arr, int N, int i, int a_j, int *house);
+int main() {
+	int N, i, j;
+	int **arr;
+	int *house;
+	result = 1000000;
+	scanf("%d", &N);
+	arr = (int **)malloc(sizeof(int *)*N);
+	house = (int *)malloc(sizeof(int )*N);
+	for (i = 0; i < N; i++)
+		arr[i] = (int *)malloc(sizeof(int)*3);
+	for (i = 0; i < N; i++) {
+		for (j = 0; j < 3; j++) {
+			scanf("%d", &arr[i][j]);
+		}
+	}//채우기
+
+	result = searchMin(arr, N, 0, 10, house);
+	printf("%d\n",result);
+
+	for (int i = 0; i<N; i++) {
+		free(arr[i]);
+	}
+	free(arr);
+	free(house);
+	return 0;
+}
+int searchMin(int **arr, int N, int i, int a_j, int *house) {
+	int b_j;
+	int sum = 0;
+	int k;
+	if (i == N) {//finish
+		for (k = 0; k < N; k++) {
+			sum = sum + house[k];
+			//printf("%d\n", house[k]);
+		
+		}
+		
+		if (sum < result) {
+			result = sum;
+			
+			return result; //최솟값을 찾았을 경우
+		}
+		else
+			return result;
+	}
+
+	for (b_j = 0; b_j < 3; b_j++) {
+		if (b_j == a_j) continue;
+		house[i] = arr[i][b_j];
+		searchMin(arr, N, i+1, b_j, house);
+	
+		
+	}
+	return result;
+}//1149
