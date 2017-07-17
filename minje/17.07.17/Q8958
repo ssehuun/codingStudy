@@ -1,0 +1,27 @@
+#include <stdio.h>
+#include <stdlib.h>
+int main() {
+	int TC;
+	int i,j;
+	int result, count;
+	char str[80];
+	scanf("%d", &TC);
+	getchar();
+	for (i = 0; i < TC; i++) {
+		result = count = 0;
+		gets(str);
+		for (j = 0; str[j] != '\0'; j++) {
+			if (str[j] == 'X') {
+				count = 0;
+			}
+			else {
+				count++;
+				result = result + count;
+			}
+		}
+		printf("%d\n", result);
+		fflush(stdin);
+
+	}
+	return 0;
+}//8958
