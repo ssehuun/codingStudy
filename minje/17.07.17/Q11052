@@ -1,0 +1,49 @@
+#include <stdio.h>
+#include <stdlib.h>
+void adv_bubble(double arr[], int order[], int len) {
+	int sorted, scan;
+	for (sorted = len - 1; sorted >= 0; sorted--) {
+		for (scan = 0; scan < sorted; scan++) {
+			if (arr[sorted] < arr[scan]) {
+				double temp = arr[sorted];
+				int t1 = order[sorted];
+				arr[sorted] = arr[scan];
+				order[sorted] = order[scan];
+				arr[scan] = temp;
+				order[scan] = t1;
+			}
+		}
+	}
+}
+int main(void) {
+	int N, i, N1, N2;
+	double result = 0;
+	int after_N;
+	int order[10000] = {0,};
+	 
+	double pricePer[10000] = {0, };
+	scanf("%d", &N);
+	for (i = 0; i < N; i++) {
+		scanf("%lf", &pricePer[i]);
+		order[i] = i+1;
+		pricePer[i] = pricePer[i] / (double)(i+1); //하나 당 단가 계산
+	}
+	adv_bubble(pricePer, order, N);
+	//order[N-1] * price[N-1] = 원래 값
+	i = N;
+	N2 = order[i - 1] + 1;
+	do {
+		if (order[i - 1] > N2) continue;
+		N2 = N % order[i - 1];
+		N1 = N / order[i - 1];
+		result = result + N1 * order[i - 1] * pricePer[i - 1]; //단가가 제일 좋은 애를 곱해줌
+		N = N - (N1*order[i - 1]);
+		
+		i--;
+	} while (N2 != 0);
+	//이제 나머지 정리해줘야함
+	
+	printf("%d\n", (int)result);
+
+	return 0;
+}//11052

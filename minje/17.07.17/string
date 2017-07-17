@@ -1,0 +1,49 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+	char str[100];
+	int i, length, length2, j, j2;
+	length = length2 = j = j2 = 0;
+	//length는 전, length2는 후, j는 문자열위치
+
+	gets(str);
+	for (i = 0; str[i] != '\0'; i++) {
+
+		length++;
+
+		if (str[i] == ' ') {
+
+			if (length % 2) {
+				if (length2 < length) {
+					length2 = length;
+					j = i;
+					length = 0;
+				}
+			}
+			else {
+				length = 0;
+				continue;
+			}
+		}
+	}
+	length++;
+	if (length % 2) {
+		if (length2 < length) {
+			length2 = length;
+			j = i;
+			length = 0;
+		}
+	}
+	i = j;
+	length2--;
+	if (length2 % 2)
+		printf("00 \n");
+	else {
+
+		for (j = j - length2; j < i; j++)
+			printf("%c", str[j]);
+		printf("\n");
+	}
+	return 0;
+}
