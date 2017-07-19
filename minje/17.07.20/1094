@@ -1,0 +1,17 @@
+#include <stdio.h>
+int main() {
+	
+	int X;
+	int i;
+	int sum = 0;
+	int binary[7] = { 0, };
+	scanf("%d", &X);
+	for (i = 0; X != 0; i++) {
+		binary[i] = X % 2;
+		X = X / 2;
+		sum += binary[i];
+	}
+	printf("%d\n", sum);
+
+	return 0;
+}
