@@ -1,0 +1,26 @@
+#include <stdio.h>
+int main() {
+	
+	int T, N, M;
+	int air[20000] = { 0, };
+	int i;
+
+	scanf("%d", &T);
+	while (T) {
+		scanf("%d", &N);
+		scanf("%d", &M);
+		for (i = 0; i < M; i++) {
+			
+			scanf("%d", &air[i]);
+			scanf("%d", &air[i+1]);
+			
+		}
+		
+		printf("%d\n", N - 1);
+
+
+		T--;
+	}
+
+	return 0;
+}
