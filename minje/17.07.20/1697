@@ -1,0 +1,45 @@
+#include<stdio.h>
+
+int soobin;
+int min = 0x7fffffff;
+
+int findS(int n) {
+	int path1 = 0x7fffffff, path2 = 0x7fffffff;
+	int path;
+
+	if (n > soobin) {
+		if (n % 2 == 0) {
+			path = findS(n / 2);
+		}
+		else {
+			if (n - 1 == soobin || n + 1 == soobin)
+				path = 1;
+			else {
+				path1 = findS(n - 1);
+				path2 = findS(n + 1);
+				if (path1 > path2)
+					path = path2;
+				else
+					path = path1;
+			}
+		}
+		if (path > n - soobin)
+			path = n - soobin;
+	}
+	else if (n < soobin) {
+		path = soobin - n;
+	}
+	else
+		return 1;
+
+	return path + 1;
+}
+
+int main() {
+	int sister;
+	int result;
+	scanf("%d", &soobin);
+	scanf("%d", &sister);
+	result = findS(sister);
+	printf("%d\n", result - 1);
+}
