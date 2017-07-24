@@ -1,0 +1,41 @@
+#include <stdio.h>
+#include <math.h>
+char isPrime[10000];
+int min[10000];
+int main() {
+	int M, N, i, j;
+	int minPrime = 0;
+	int sum = 0;
+	scanf("%d", &M);
+	scanf("%d", &N);
+	if (M == 1) {
+		isPrime[1] = -1;
+	}
+	for (i = 2; i*i <= N; i++) {
+		if (isPrime[i] == 0) {
+			for (j = i * 2; j <= N; j += i)
+				isPrime[j] = 1;
+		}
+	}
+	j = 0;
+	for (i = M; i < N + 1; i++) {
+		if (isPrime[i] == 0) {
+			sum = sum + i;
+			min[j] = i;
+			j++;
+		
+		}
+	}
+	if (sum == 0) {
+		printf("-1\n");
+		return 0;
+	}
+	else {
+		printf("%d\n", sum);
+		printf("%d\n", min[0]);
+	}
+
+	return 0;
+}
+
+
