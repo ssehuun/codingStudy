@@ -1,0 +1,74 @@
+#include <stdio.h>
+#include <stdlib.h>
+int a[40];
+int first[1 << 20];
+int second[1 << 20];
+int cmp(const void *u, const void *v) {
+	if (*(int *)u > *(int *)v) {
+		return 1;
+	}
+	else {
+		return -1;
+	}
+}
+int main() {
+	int n, s;
+	scanf("%d %d", &n, &s);
+	for (int i = 0; i<n; i++) {
+		scanf("%d", &a[i]);
+	}
+	int m = n / 2;
+	n = n - m;
+	for (int i = 0; i < (1 << n); i++) {
+		for (int k = 0; k < n; k++) {
+			if (i&(1 << k)) {
+				first[i] = first[i] + a[k];
+			}
+		}
+	}
+	for (int i = 0; i<(1 << m); i++) {
+		for (int k = 0; k<m; k++) {
+			if (i&(1 << k)) {
+				second[i] += a[k + n];
+			}
+		}
+	}//반으로 나누고 부분집합의 합을 구함
+	n = (1 << n);
+	m = (1 << m);
+	qsort(first, n, sizeof(int), cmp);
+	qsort(second, m, sizeof(int), cmp);
+	for (int i = 0; i<m / 2; i++) {
+		int temp = second[i];
+		second[i] = second[m - i - 1];
+		second[m - i - 1] = temp;
+	}
+	int i = 0;
+	int j = 0;
+	long long ans = 0;
+	while (i < n && j < m) {
+		if (first[i] + second[j] == s) {
+			long long c1 = 1;
+			long long c2 = 1;
+			i += 1;
+			j += 1;
+			while (i < n && first[i] == first[i - 1]) {
+				c1 += 1;
+				i += 1;
+			}
+			while (j < m && second[j] == second[j - 1]) {
+				c2 += 1;
+				j += 1;
+			}
+			ans += c1*c2;
+		}
+		else if (first[i] + second[j] < s) {
+			i += 1;
+		}
+		else {
+			j += 1;
+		}
+	}
+	if (s == 0) ans -= 1;
+	printf("%lld\n", ans);
+	return 0;
+}//1208
