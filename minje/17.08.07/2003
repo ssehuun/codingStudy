@@ -1,0 +1,33 @@
+#include <stdio.h>
+
+int arr[10000];
+int sol;
+
+int main() {
+	int M, N;
+	int L, R;
+	int sum = 0;
+	scanf("%d %d", &N, &M);
+	L = R = 0;
+	for (int i = 0; i < N; i++) {
+		scanf("%d", &arr[i]);
+	}
+	sum = arr[0];
+	while (L <= R && R < N) {
+		if (sum < M) {
+			R++;
+			sum = sum + arr[R];
+		}
+		else if (sum > M) {
+			sum = sum - arr[L];
+			L++;
+		}
+		else if(sum == M){
+			sol++;
+			R++;
+			sum = sum + arr[R];
+		}
+	}
+	printf("%d\n", sol);
+	return 0;
+} //2003
