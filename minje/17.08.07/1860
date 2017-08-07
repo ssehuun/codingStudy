@@ -1,0 +1,43 @@
+#include <stdio.h>
+
+int arr[1000001];
+int sol;
+
+int main() {
+	int M, N;
+	int L, R;
+	int sum = 0;
+	scanf("%d %d", &N, &M);
+	L = R = 0;
+	for (int i = 0; i < N; i++) {
+		scanf("%d", &arr[i]);
+	}
+	sum = arr[0];
+	sol = N + 1;
+	while (L <= R && R < N) {
+		if (sum < M) {
+			R++;
+			sum = sum + arr[R];
+		}
+		else if (sum > M) {
+			if (R - L + 1 < sol) {
+				sol = R - L + 1;
+			}
+			sum = sum - arr[L];
+			L++;
+		}
+		else if (sum == M) {
+			if (R - L + 1 < sol) {
+				sol = R - L + 1;
+			}
+			
+			R++;
+			sum = sum + arr[R];
+		}
+	}
+	
+	if (sol > N) sol = 0;
+	
+	printf("%d\n", sol);
+	return 0;
+}
