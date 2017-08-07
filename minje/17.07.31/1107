@@ -1,0 +1,43 @@
+#include <stdio.h>
+#include <stdbool.h>
+#include <math.h>
+
+bool broken[10];
+int possible(int c) {
+	if (c == 0) {
+		if (broken[0]) return 0;
+		else return 1;
+	}
+	int len = 0;
+	while (c > 0) {
+		if (broken[c % 10]) return 0;
+		len ++;
+		c /= 10;
+	}
+	return len;
+}
+int main() {
+	int n;
+	int m, c, press;
+	int i, ans, x;
+	int len;
+	scanf("%d %d", &n, &m);
+	for (i = 0; i < m; i++) {
+		scanf("%d", &x);
+		broken[x] = true;
+	}
+	int ans = abs(n - 100);
+	for (i = 0; i <= 1000000; i++) {
+		len = possible(i);
+		if (len > 0) {
+			press = i - n;
+			if (press < 0) press = -press;
+			if (ans > len + press) {
+				ans = len + press;
+			}
+		}
+	}
+	printf("%d\n", ans);
+	return 0;
+	
+}// 1107

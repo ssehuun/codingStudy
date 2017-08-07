@@ -1,0 +1,77 @@
+#include <iostream>
+#include <queue>
+#include <algorithm>
+#include <cstdio>
+#include <string>
+#include <cstring>
+using namespace std;
+bool check[10001];
+int dist[10001];
+char how[10001];
+int from[10001];
+
+int main() {
+	int N;
+	int next;
+	int i;
+	cin >> N;
+	while (N--) {
+		int A, B;
+		scanf("%d %d", &A, &B);
+		queue<int> q;
+		memset(check, false, sizeof(check));
+		memset(dist, 0, sizeof(dist));
+		memset(how, 0, sizeof(how));
+		
+		check[N] = true;
+		dist[N] = 0;
+		from[N] = -1;
+		q.push(N);
+		while (q.empty()) {
+			int now = q.front();
+			q.pop();
+			next = (now * 2) % 10000;
+			if (check[next] == false) {
+				q.push(next);
+				dist[next] = dist[now] + 1;
+				from[next] = now;
+				check[next] = true;
+				how[next] = 'D';
+			}
+			next = now - 1;
+			if (check[next] == false) {
+				q.push(next);
+				dist[next] = dist[now] + 1;
+				from[next] = now;
+				check[next] = true;
+				how[next] = 'S';
+			}
+			next = (now % 1000) * 10 + now / 1000;
+			if (check[next] == false) {
+				q.push(next);
+				dist[next] = dist[now] + 1;
+				from[next] = now;
+				check[next] = true;
+				how[next] = 'L';
+			}
+			next = (now / 10) + (now % 10) * 1000;
+			if (check[next] == false) {
+				q.push(next);
+				dist[next] = dist[now] + 1;
+				from[next] = now;
+				check[next] = true;
+				how[next] = 'R';
+			}
+		}
+		string ans = "";
+		while (B != A) {
+			ans += how[B];
+			B = from[B];
+		}
+		reverse(ans.begin(), ans.end());
+		cout << ans << '\n';
+	}
+	return 0;
+
+
+}
